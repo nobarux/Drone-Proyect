@@ -93,10 +93,18 @@ namespace Drone_Proyect.Controllers
                 }
                 else
                 {
-                    var droneToload = (from droBat in db.Drone
-                                       where droBat.id_Drone == id
-                                       select droBat.battery).SingleOrDefault();
-                    return Request.CreateResponse(HttpStatusCode.Found, droneToload);
+                    var droneMed = (from droMed in db.DronMed
+                                    join med in db.Medication on droMed.id_Med equals med.id_Med
+                                       where droMed.id_Drone == id
+                                       select new {Name = med.name,Weigth = med.weigth ,Code = med.code }).ToList();
+                    if (droneMed.Count == 0)
+                    {
+                        return Request.CreateResponse(HttpStatusCode.NotFound, "This drone haven't any medication items");
+                    }
+                    else
+                    {
+                        return Request.CreateResponse(HttpStatusCode.Found, droneMed);
+                    }
                 }
 
             }
