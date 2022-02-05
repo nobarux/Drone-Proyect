@@ -14,11 +14,20 @@ namespace Drone_Proyect.Models
     
     public partial class Drone
     {
-        public long id_drone { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Drone()
+        {
+            this.DronMed = new HashSet<DronMed>();
+        }
+    
+        public long id_Drone { get; set; }
         public string serial_number { get; set; }
         public string model { get; set; }
         public Nullable<double> weight { get; set; }
         public Nullable<long> battery { get; set; }
         public string state { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DronMed> DronMed { get; set; }
     }
 }

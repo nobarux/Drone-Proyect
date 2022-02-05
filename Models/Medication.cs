@@ -14,10 +14,19 @@ namespace Drone_Proyect.Models
     
     public partial class Medication
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Medication()
+        {
+            this.DronMed = new HashSet<DronMed>();
+        }
+    
         public long id_Med { get; set; }
         public string name { get; set; }
         public Nullable<double> weigth { get; set; }
         public string code { get; set; }
         public string image { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DronMed> DronMed { get; set; }
     }
 }

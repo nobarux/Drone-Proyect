@@ -4,20 +4,26 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="drone_proyModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=&quot;E:\TRABAJO\Musala soft\drone_proy.db&quot;" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="drone_proyModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=&quot;E:\TRABAJO\Musala soft\drone_proy.db&quot;" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Drone">
           <Key>
-            <PropertyRef Name="id_drone" />
+            <PropertyRef Name="id_Drone" />
           </Key>
-          <Property Name="id_drone" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Drone" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="serial_number" Type="varchar" MaxLength="255" />
           <Property Name="model" Type="varchar" MaxLength="255" />
           <Property Name="weight" Type="real" />
           <Property Name="battery" Type="integer" />
           <Property Name="state" Type="varchar" MaxLength="2147483647" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6005: Actualmente, no se admite el tipo de datos '' para la versión de Entity Framework de destino; se excluyó la columna 'id_Drone' de la tabla 'main.Medication'.-->
+        <EntityType Name="DronMed">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Med" Type="integer" />
+          <Property Name="id_Drone" Type="integer" />
+        </EntityType>
         <EntityType Name="Medication">
           <Key>
             <PropertyRef Name="id_Med" />
@@ -28,32 +34,47 @@ advertencia 6005: Actualmente, no se admite el tipo de datos '' para la versión
           <Property Name="code" Type="varchar" MaxLength="255" />
           <Property Name="image" Type="varchar" MaxLength="255" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6007: La asociación entre 'Drone' y 'Medication' no se creará porque se encontró que la columna de clave 'Drone.id_Drone' no forma parte de la definición de tabla (vea advertencias anteriores).
-        <Association Name="FK_Medication_0_0">
-          <End Role="Drone" Type="Self.Drone" Multiplicity="1" />
-          <End Role="Medication" Type="Self.Medication" Multiplicity="*" />
-        </Association>-->
+        <Association Name="FK_DronMed_0_0">
+          <End Role="Drone" Type="Self.Drone" Multiplicity="0..1" />
+          <End Role="DronMed" Type="Self.DronMed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drone">
+              <PropertyRef Name="id_Drone" />
+            </Principal>
+            <Dependent Role="DronMed">
+              <PropertyRef Name="id_Drone" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DronMed_1_0">
+          <End Role="Medication" Type="Self.Medication" Multiplicity="0..1" />
+          <End Role="DronMed" Type="Self.DronMed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Medication">
+              <PropertyRef Name="id_Med" />
+            </Principal>
+            <Dependent Role="DronMed">
+              <PropertyRef Name="id_Med" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="drone_proyModelStoreContainer">
           <EntitySet Name="Drone" EntityType="Self.Drone" store:Type="Tables" />
+          <EntitySet Name="DronMed" EntityType="Self.DronMed" store:Type="Tables" />
           <EntitySet Name="Medication" EntityType="Self.Medication" store:Type="Tables" />
+          <AssociationSet Name="FK_DronMed_0_0" Association="Self.FK_DronMed_0_0">
+            <End Role="Drone" EntitySet="Drone" />
+            <End Role="DronMed" EntitySet="DronMed" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DronMed_1_0" Association="Self.FK_DronMed_1_0">
+            <End Role="Medication" EntitySet="Medication" />
+            <End Role="DronMed" EntitySet="DronMed" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="drone_proyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Drone">
-          <Key>
-            <PropertyRef Name="id_drone" />
-          </Key>
-          <Property Name="id_drone" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="serial_number" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="model" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="weight" Type="Double" />
-          <Property Name="battery" Type="Int64" />
-          <Property Name="state" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="Medication">
           <Key>
             <PropertyRef Name="id_Med" />
@@ -63,29 +84,73 @@ advertencia 6007: La asociación entre 'Drone' y 'Medication' no se creará porq
           <Property Name="weigth" Type="Double" />
           <Property Name="code" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="image" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DronMed" Relationship="drone_proyModel.FK_DronMed_1_0" FromRole="Medication" ToRole="DronMed" />
         </EntityType>
         <EntityContainer Name="drone_proyEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Drone" EntityType="Self.Drone" />
           <EntitySet Name="Medication" EntityType="Self.Medication" />
-        </EntityContainer>
-      </Schema>
+          <EntitySet Name="Drone" EntityType="drone_proyModel.Drone" />
+          <EntitySet Name="DronMed" EntityType="drone_proyModel.DronMed" />
+          <AssociationSet Name="FK_DronMed_0_0" Association="drone_proyModel.FK_DronMed_0_0">
+            <End Role="Drone" EntitySet="Drone" />
+            <End Role="DronMed" EntitySet="DronMed" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DronMed_1_0" Association="drone_proyModel.FK_DronMed_1_0">
+            <End Role="Medication" EntitySet="Medication" />
+            <End Role="DronMed" EntitySet="DronMed" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Drone">
+          <Key>
+            <PropertyRef Name="id_Drone" />
+          </Key>
+          <Property Name="id_Drone" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="serial_number" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="model" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="weight" Type="Double" />
+          <Property Name="battery" Type="Int64" />
+          <Property Name="state" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DronMed" Relationship="drone_proyModel.FK_DronMed_0_0" FromRole="Drone" ToRole="DronMed" />
+        </EntityType>
+        <EntityType Name="DronMed">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Med" Type="Int64" />
+          <Property Name="id_Drone" Type="Int64" />
+          <NavigationProperty Name="Drone" Relationship="drone_proyModel.FK_DronMed_0_0" FromRole="DronMed" ToRole="Drone" />
+          <NavigationProperty Name="Medication" Relationship="drone_proyModel.FK_DronMed_1_0" FromRole="DronMed" ToRole="Medication" />
+        </EntityType>
+        <Association Name="FK_DronMed_0_0">
+          <End Type="drone_proyModel.Drone" Role="Drone" Multiplicity="0..1" />
+          <End Type="drone_proyModel.DronMed" Role="DronMed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drone">
+              <PropertyRef Name="id_Drone" />
+            </Principal>
+            <Dependent Role="DronMed">
+              <PropertyRef Name="id_Drone" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DronMed_1_0">
+          <End Type="drone_proyModel.Medication" Role="Medication" Multiplicity="0..1" />
+          <End Type="drone_proyModel.DronMed" Role="DronMed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Medication">
+              <PropertyRef Name="id_Med" />
+            </Principal>
+            <Dependent Role="DronMed">
+              <PropertyRef Name="id_Med" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="drone_proyModelStoreContainer" CdmEntityContainer="drone_proyEntities">
-          <EntitySetMapping Name="Drone">
-            <EntityTypeMapping TypeName="drone_proyModel.Drone">
-              <MappingFragment StoreEntitySet="Drone">
-                <ScalarProperty Name="id_drone" ColumnName="id_drone" />
-                <ScalarProperty Name="serial_number" ColumnName="serial_number" />
-                <ScalarProperty Name="model" ColumnName="model" />
-                <ScalarProperty Name="weight" ColumnName="weight" />
-                <ScalarProperty Name="battery" ColumnName="battery" />
-                <ScalarProperty Name="state" ColumnName="state" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Medication">
             <EntityTypeMapping TypeName="drone_proyModel.Medication">
               <MappingFragment StoreEntitySet="Medication">
@@ -94,6 +159,27 @@ advertencia 6007: La asociación entre 'Drone' y 'Medication' no se creará porq
                 <ScalarProperty Name="weigth" ColumnName="weigth" />
                 <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="image" ColumnName="image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Drone">
+            <EntityTypeMapping TypeName="drone_proyModel.Drone">
+              <MappingFragment StoreEntitySet="Drone">
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="battery" ColumnName="battery" />
+                <ScalarProperty Name="weight" ColumnName="weight" />
+                <ScalarProperty Name="model" ColumnName="model" />
+                <ScalarProperty Name="serial_number" ColumnName="serial_number" />
+                <ScalarProperty Name="id_Drone" ColumnName="id_Drone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DronMed">
+            <EntityTypeMapping TypeName="drone_proyModel.DronMed">
+              <MappingFragment StoreEntitySet="DronMed">
+                <ScalarProperty Name="id_Drone" ColumnName="id_Drone" />
+                <ScalarProperty Name="id_Med" ColumnName="id_Med" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="drone_proyModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=&quot;E:\TRABAJO\Musala soft\drone_proy.db&quot;" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Drone">
+    <Key>
+      <PropertyRef Name="id_Drone" />
+    </Key>
+    <Property Name="id_Drone" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="serial_number" Type="varchar" MaxLength="255" />
+    <Property Name="model" Type="varchar" MaxLength="255" />
+    <Property Name="weight" Type="real" />
+    <Property Name="battery" Type="integer" />
+    <Property Name="state" Type="varchar" MaxLength="2147483647" />
+  </EntityType>
+  <EntityType Name="DronMed">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_Med" Type="integer" />
+    <Property Name="id_Dron" Type="integer" />
+  </EntityType>
+  <EntityType Name="Medication">
+    <Key>
+      <PropertyRef Name="id_Med" />
+    </Key>
+    <Property Name="id_Med" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="255" />
+    <Property Name="weigth" Type="real" />
+    <Property Name="code" Type="varchar" MaxLength="255" />
+    <Property Name="image" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <Association Name="FK_DronMed_0_0">
+    <End Role="Drone" Type="Self.Drone" Multiplicity="0..1" />
+    <End Role="DronMed" Type="Self.DronMed" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Drone">
+        <PropertyRef Name="id_Drone" />
+      </Principal>
+      <Dependent Role="DronMed">
+        <PropertyRef Name="id_Dron" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DronMed_1_0">
+    <End Role="Medication" Type="Self.Medication" Multiplicity="0..1" />
+    <End Role="DronMed" Type="Self.DronMed" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Medication">
+        <PropertyRef Name="id_Med" />
+      </Principal>
+      <Dependent Role="DronMed">
+        <PropertyRef Name="id_Med" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="drone_proyModelStoreContainer">
+    <EntitySet Name="Drone" EntityType="Self.Drone" store:Type="Tables" />
+    <EntitySet Name="DronMed" EntityType="Self.DronMed" store:Type="Tables" />
+    <EntitySet Name="Medication" EntityType="Self.Medication" store:Type="Tables" />
+    <AssociationSet Name="FK_DronMed_0_0" Association="Self.FK_DronMed_0_0">
+      <End Role="Drone" EntitySet="Drone" />
+      <End Role="DronMed" EntitySet="DronMed" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DronMed_1_0" Association="Self.FK_DronMed_1_0">
+      <End Role="Medication" EntitySet="Medication" />
+      <End Role="DronMed" EntitySet="DronMed" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
