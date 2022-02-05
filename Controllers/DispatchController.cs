@@ -23,32 +23,56 @@ namespace Drone_Proyect.Controllers
             try
             {
                 var message = Request.CreateResponse(HttpStatusCode.Created, dronemed);
-
+                #region drone validation
                 using (drone_proyEntities db = new drone_proyEntities())
                 {
                     //Datos que vienen del body
                     var datos = dronemed;
                     var dron = datos.id_Drone;
                     var medi = datos.id_Med;
+                    //--//
 
-                    //Pesos respectivos
-                    var weightDron = (from drones in db.Drone where drones.id_Drone == dron select drones.weight).SingleOrDefault();
-                    var weightMed = (from med in db.Medication where med.id_Med == medi select med.weigth).SingleOrDefault();
-                    if (weightMed > weightDron)
+                    //Data from 
+                    var especificDron = (from drones in db.DronMed where drones.id_Drone == dron select drones).ToList();
+                    double pesoAcumulado = 0;
+                    foreach (var item in especificDron)
                     {
-                        return Request.CreateResponse(HttpStatusCode.NotFound, "The med is heavier than the max weigth of the drone");
+                        var weightMed = (from med in db.Medication where med.id_Med == item.id_Med select med.weigth).SingleOrDefault();
+                        pesoAcumulado += Convert.ToDouble(weightMed);
+                    }
+                    //--//
+                    //Weights
+                    var weightDron = (from drones in db.Drone where drones.id_Drone == dron select drones.weight).SingleOrDefault();
+                    var sendingweightMed = (from med in db.Medication where med.id_Med == medi select med.weigth).SingleOrDefault();
+                    pesoAcumulado += Convert.ToDouble(sendingweightMed);
+
+                    if (pesoAcumulado > weightDron)
+                    {
+                        return Request.CreateResponse(HttpStatusCode.BadRequest, "The med is heavier than the max weigth of the drone");
                     }
                     else
                     {
-                        db.DronMed.Add(dronemed);
-                        return Request.CreateResponse(HttpStatusCode.OK);
+                        var loadingDrone = (from loadDrone in db.Drone where loadDrone.id_Drone == dron select loadDrone).SingleOrDefault();
 
-                        //message.Headers.Location = new Uri(Request.RequestUri + dronemed.id.ToString());
-                        //return message;
+                        if (loadingDrone.battery < 25)
+                        {
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, "This drone have a low battery to load any medication");
+                        }
+                        else
+                        {
+                            //Change the status of the drone from idle to loading
+                            loadingDrone.state = "LOADING";
+                            db.SaveChanges();
+                            ///----///
+                            /// 
+                            db.DronMed.Add(dronemed);
+                            db.SaveChanges();
+                            return Request.CreateResponse(HttpStatusCode.OK, "Drone loaded succefully");
+                        }
                     }
 
-                    
                 }
+                #endregion
             }
             catch (Exception ex)
             {

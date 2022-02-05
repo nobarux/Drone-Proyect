@@ -7,7 +7,7 @@
       <Diagram DiagramId="fe4e1bdb1b9846c4b43453ec363ecca9" Name="Diagram1">
         <EntityTypeShape EntityType="drone_proyModel.Medication" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="drone_proyModel.Drone" Width="1.5" PointX="7.375" PointY="1.25" />
-        <EntityTypeShape EntityType="drone_proyModel.DronMed" Width="1.5" PointX="9.625" PointY="1.25" />
+        <EntityTypeShape EntityType="drone_proyModel.DronMed" Width="1.5" PointX="4.875" PointY="1.375" />
         <AssociationConnector Association="drone_proyModel.FK_DronMed_0_0" />
         <AssociationConnector Association="drone_proyModel.FK_DronMed_1_0" />
         </Diagram>

@@ -17,7 +17,7 @@
     </Key>
     <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="id_Med" Type="integer" />
-    <Property Name="id_Dron" Type="integer" />
+    <Property Name="id_Drone" Type="integer" />
   </EntityType>
   <EntityType Name="Medication">
     <Key>
@@ -37,7 +37,7 @@
         <PropertyRef Name="id_Drone" />
       </Principal>
       <Dependent Role="DronMed">
-        <PropertyRef Name="id_Dron" />
+        <PropertyRef Name="id_Drone" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

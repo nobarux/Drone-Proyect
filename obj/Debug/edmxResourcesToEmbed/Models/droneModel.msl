@@ -12,15 +12,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="DronMed">
-      <EntityTypeMapping TypeName="drone_proyModel.DronMed">
-        <MappingFragment StoreEntitySet="DronMed">
-          <ScalarProperty Name="id_Dron" ColumnName="id_Dron" />
-          <ScalarProperty Name="id_Med" ColumnName="id_Med" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Drone">
       <EntityTypeMapping TypeName="drone_proyModel.Drone">
         <MappingFragment StoreEntitySet="Drone">
@@ -30,6 +21,15 @@
           <ScalarProperty Name="model" ColumnName="model" />
           <ScalarProperty Name="serial_number" ColumnName="serial_number" />
           <ScalarProperty Name="id_Drone" ColumnName="id_Drone" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DronMed">
+      <EntityTypeMapping TypeName="drone_proyModel.DronMed">
+        <MappingFragment StoreEntitySet="DronMed">
+          <ScalarProperty Name="id_Drone" ColumnName="id_Drone" />
+          <ScalarProperty Name="id_Med" ColumnName="id_Med" />
+          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

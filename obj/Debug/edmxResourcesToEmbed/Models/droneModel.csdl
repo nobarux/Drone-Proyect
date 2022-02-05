@@ -13,39 +13,17 @@
   </EntityType>
   <EntityContainer Name="drone_proyEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Medication" EntityType="Self.Medication" />
-    <EntitySet Name="DronMed" EntityType="drone_proyModel.DronMed" />
-    <AssociationSet Name="FK_DronMed_1_0" Association="drone_proyModel.FK_DronMed_1_0">
-      <End Role="Medication" EntitySet="Medication" />
-      <End Role="DronMed" EntitySet="DronMed" />
-    </AssociationSet>
     <EntitySet Name="Drone" EntityType="drone_proyModel.Drone" />
+    <EntitySet Name="DronMed" EntityType="drone_proyModel.DronMed" />
     <AssociationSet Name="FK_DronMed_0_0" Association="drone_proyModel.FK_DronMed_0_0">
       <End Role="Drone" EntitySet="Drone" />
       <End Role="DronMed" EntitySet="DronMed" />
     </AssociationSet>
+    <AssociationSet Name="FK_DronMed_1_0" Association="drone_proyModel.FK_DronMed_1_0">
+      <End Role="Medication" EntitySet="Medication" />
+      <End Role="DronMed" EntitySet="DronMed" />
+    </AssociationSet>
   </EntityContainer>
-  <EntityType Name="DronMed">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="id_Med" Type="Int64" />
-    <Property Name="id_Dron" Type="Int64" />
-    <NavigationProperty Name="Medication" Relationship="drone_proyModel.FK_DronMed_1_0" FromRole="DronMed" ToRole="Medication" />
-    <NavigationProperty Name="Drone" Relationship="drone_proyModel.FK_DronMed_0_0" FromRole="DronMed" ToRole="Drone" />
-  </EntityType>
-  <Association Name="FK_DronMed_1_0">
-    <End Type="drone_proyModel.Medication" Role="Medication" Multiplicity="0..1" />
-    <End Type="drone_proyModel.DronMed" Role="DronMed" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Medication">
-        <PropertyRef Name="id_Med" />
-      </Principal>
-      <Dependent Role="DronMed">
-        <PropertyRef Name="id_Med" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityType Name="Drone">
     <Key>
       <PropertyRef Name="id_Drone" />
@@ -58,6 +36,16 @@
     <Property Name="state" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="DronMed" Relationship="drone_proyModel.FK_DronMed_0_0" FromRole="Drone" ToRole="DronMed" />
   </EntityType>
+  <EntityType Name="DronMed">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_Med" Type="Int64" />
+    <Property Name="id_Drone" Type="Int64" />
+    <NavigationProperty Name="Drone" Relationship="drone_proyModel.FK_DronMed_0_0" FromRole="DronMed" ToRole="Drone" />
+    <NavigationProperty Name="Medication" Relationship="drone_proyModel.FK_DronMed_1_0" FromRole="DronMed" ToRole="Medication" />
+  </EntityType>
   <Association Name="FK_DronMed_0_0">
     <End Type="drone_proyModel.Drone" Role="Drone" Multiplicity="0..1" />
     <End Type="drone_proyModel.DronMed" Role="DronMed" Multiplicity="*" />
@@ -66,7 +54,19 @@
         <PropertyRef Name="id_Drone" />
       </Principal>
       <Dependent Role="DronMed">
-        <PropertyRef Name="id_Dron" />
+        <PropertyRef Name="id_Drone" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DronMed_1_0">
+    <End Type="drone_proyModel.Medication" Role="Medication" Multiplicity="0..1" />
+    <End Type="drone_proyModel.DronMed" Role="DronMed" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Medication">
+        <PropertyRef Name="id_Med" />
+      </Principal>
+      <Dependent Role="DronMed">
+        <PropertyRef Name="id_Med" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
