@@ -16,14 +16,96 @@ namespace Drone_Proyect.Controllers
         private drone_proyEntities db = new drone_proyEntities();
         // GET: api/Dispatch/GetDron
         [Route("api/Dispatch/GetDron")]
-
         public IQueryable<Drone> GetDron()
         {
             return db.Drone;
         }
 
-        // POST: api/Dispatch/
-        //[Route("Dispatch/LoadDrone")]
+        // POST: api/Dispatch/PostDrone
+        [Route("api/Dispatch/PostDrone")]
+        public HttpResponseMessage Post([FromBody] Drone drone)
+        {
+            try
+            {
+                using (drone_proyEntities dron = new drone_proyEntities())
+                {
+                    dron.Drone.Add(drone);
+                    dron.SaveChanges();
+                    var message = Request.CreateResponse(HttpStatusCode.Created, drone);
+                    message.Headers.Location = new Uri(Request.RequestUri + drone.id_Drone.ToString());
+                    return message;
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+
+        }
+
+        // GET: api/Dispatch/DronesLoad
+        [Route("api/Dispatch/DronesLoad")]
+        public HttpResponseMessage GetDroneforLoading()
+        {
+            using (drone_proyEntities db = new drone_proyEntities())
+            {
+                var droneToload = (from droload in db.Drone
+                                   where droload.state == "LOADING"
+                                   select new { Serial_Number = droload.serial_number, Model = droload.model, Battery = droload.battery, State = droload.state }).ToList();
+                return Request.CreateResponse(HttpStatusCode.Found, droneToload);
+            }
+        }
+
+        // GET: api/Dispatch/BatteryDrone/5
+        [Route("api/Dispatch/BatteryDrone/{id}")]
+        public HttpResponseMessage GetDroneBattery(long id)
+        {
+            using (drone_proyEntities db = new drone_proyEntities())
+            {
+
+                Drone drone = db.Drone.Find(id);
+                if (drone == null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
+                }
+                else
+                {
+                    var droneToload = (from droBat in db.Drone
+                                       where droBat.id_Drone == id
+                                       select droBat.battery).SingleOrDefault();
+                    return Request.CreateResponse(HttpStatusCode.Found, droneToload);
+                }
+                
+            }
+        }
+
+        // GET: api/Dispatch/MedicationDrone/5
+        [Route("api/Dispatch/MedicationDrone/{id}")]
+        public HttpResponseMessage GetDroneMedication(long id)
+        {
+            using (drone_proyEntities db = new drone_proyEntities())
+            {
+
+                Drone drone = db.Drone.Find(id);
+                if (drone == null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
+                }
+                else
+                {
+                    var droneToload = (from droBat in db.Drone
+                                       where droBat.id_Drone == id
+                                       select droBat.battery).SingleOrDefault();
+                    return Request.CreateResponse(HttpStatusCode.Found, droneToload);
+                }
+
+            }
+        }
+
+
+
+        // POST: api/Dispatch/LoadDrone
+        [Route("api/Dispatch/LoadDrone")]
         public HttpResponseMessage Post([FromBody]DronMed dronemed)
         {
             try
