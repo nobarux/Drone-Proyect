@@ -18,7 +18,7 @@ namespace Drone_Proyect.Models
         public Nullable<long> id_Med { get; set; }
         public Nullable<long> id_Drone { get; set; }
     
-        public virtual Drone Drone { get; set; }
-        public virtual Medication Medication { get; set; }
+        public  Drone Drone { get; set; }
+        public  Medication Medication { get; set; }
     }
 }

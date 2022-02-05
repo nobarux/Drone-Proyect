@@ -128,15 +128,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
-    <Content Include="Models\droneModel.Context.tt">
+    <Content Include="Models\DroneModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>droneModel.edmx</DependentUpon>
-      <LastGenOutput>droneModel.Context.cs</LastGenOutput>
+      <DependentUpon>DroneModel.edmx</DependentUpon>
+      <LastGenOutput>DroneModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\droneModel.tt">
+    <Content Include="Models\DroneModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>droneModel.edmx</DependentUpon>
-      <LastGenOutput>droneModel.cs</LastGenOutput>
+      <DependentUpon>DroneModel.edmx</DependentUpon>
+      <LastGenOutput>DroneModel.cs</LastGenOutput>
     </Content>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -146,45 +146,44 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\DispatchController.cs" />
-    <Compile Include="Controllers\DronesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Drone.cs">
-      <DependentUpon>droneModel.tt</DependentUpon>
+      <DependentUpon>DroneModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\droneModel.Context.cs">
+    <Compile Include="Models\DroneModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>droneModel.Context.tt</DependentUpon>
+      <DependentUpon>DroneModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\droneModel.cs">
+    <Compile Include="Models\DroneModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>droneModel.tt</DependentUpon>
+      <DependentUpon>DroneModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\droneModel.Designer.cs">
+    <Compile Include="Models\DroneModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>droneModel.edmx</DependentUpon>
+      <DependentUpon>DroneModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\DronMed.cs">
-      <DependentUpon>droneModel.tt</DependentUpon>
+      <DependentUpon>DroneModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Medication.cs">
-      <DependentUpon>droneModel.tt</DependentUpon>
+      <DependentUpon>DroneModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
-    <EntityDeploy Include="Models\droneModel.edmx">
+    <EntityDeploy Include="Models\DroneModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>droneModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>DroneModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\droneModel.edmx.diagram">
-      <DependentUpon>droneModel.edmx</DependentUpon>
+    <Content Include="Models\DroneModel.edmx.diagram">
+      <DependentUpon>DroneModel.edmx</DependentUpon>
     </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

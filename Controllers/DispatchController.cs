@@ -14,10 +14,16 @@ namespace Drone_Proyect.Controllers
     public class DispatchController : ApiController
     {
         private drone_proyEntities db = new drone_proyEntities();
+        // GET: api/Dispatch/GetDron
+        [Route("api/Dispatch/GetDron")]
+
+        public IQueryable<Drone> GetDron()
+        {
+            return db.Drone;
+        }
 
         // POST: api/Dispatch/
         //[Route("Dispatch/LoadDrone")]
-
         public HttpResponseMessage Post([FromBody]DronMed dronemed)
         {
             try
@@ -48,7 +54,7 @@ namespace Drone_Proyect.Controllers
 
                     if (pesoAcumulado > weightDron)
                     {
-                        return Request.CreateResponse(HttpStatusCode.BadRequest, "The med is heavier than the max weigth of the drone");
+                        return Request.CreateResponse(HttpStatusCode.BadRequest, "This drone can't load this much weight");
                     }
                     else
                     {
@@ -56,7 +62,7 @@ namespace Drone_Proyect.Controllers
 
                         if (loadingDrone.battery < 25)
                         {
-                            return Request.CreateResponse(HttpStatusCode.BadRequest, "This drone have a low battery to load any medication");
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, "This drone have a low battery to load any medication,please charge it");
                         }
                         else
                         {

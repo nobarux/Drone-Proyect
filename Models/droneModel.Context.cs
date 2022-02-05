@@ -18,6 +18,7 @@ namespace Drone_Proyect.Models
         public drone_proyEntities()
             : base("name=drone_proyEntities")
         {
+            this.Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -25,8 +26,8 @@ namespace Drone_Proyect.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Medication> Medication { get; set; }
         public virtual DbSet<Drone> Drone { get; set; }
         public virtual DbSet<DronMed> DronMed { get; set; }
+        public virtual DbSet<Medication> Medication { get; set; }
     }
 }

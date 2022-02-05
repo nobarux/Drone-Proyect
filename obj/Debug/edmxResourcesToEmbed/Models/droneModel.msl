@@ -1,6 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="drone_proyModelStoreContainer" CdmEntityContainer="drone_proyEntities">
+    <EntitySetMapping Name="Drone">
+      <EntityTypeMapping TypeName="drone_proyModel.Drone">
+        <MappingFragment StoreEntitySet="Drone">
+          <ScalarProperty Name="id_Drone" ColumnName="id_Drone" />
+          <ScalarProperty Name="serial_number" ColumnName="serial_number" />
+          <ScalarProperty Name="model" ColumnName="model" />
+          <ScalarProperty Name="weight" ColumnName="weight" />
+          <ScalarProperty Name="battery" ColumnName="battery" />
+          <ScalarProperty Name="state" ColumnName="state" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DronMed">
+      <EntityTypeMapping TypeName="drone_proyModel.DronMed">
+        <MappingFragment StoreEntitySet="DronMed">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="id_Med" ColumnName="id_Med" />
+          <ScalarProperty Name="id_Drone" ColumnName="id_Drone" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Medication">
       <EntityTypeMapping TypeName="drone_proyModel.Medication">
         <MappingFragment StoreEntitySet="Medication">
@@ -9,27 +30,6 @@
           <ScalarProperty Name="weigth" ColumnName="weigth" />
           <ScalarProperty Name="code" ColumnName="code" />
           <ScalarProperty Name="image" ColumnName="image" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Drone">
-      <EntityTypeMapping TypeName="drone_proyModel.Drone">
-        <MappingFragment StoreEntitySet="Drone">
-          <ScalarProperty Name="state" ColumnName="state" />
-          <ScalarProperty Name="battery" ColumnName="battery" />
-          <ScalarProperty Name="weight" ColumnName="weight" />
-          <ScalarProperty Name="model" ColumnName="model" />
-          <ScalarProperty Name="serial_number" ColumnName="serial_number" />
-          <ScalarProperty Name="id_Drone" ColumnName="id_Drone" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="DronMed">
-      <EntityTypeMapping TypeName="drone_proyModel.DronMed">
-        <MappingFragment StoreEntitySet="DronMed">
-          <ScalarProperty Name="id_Drone" ColumnName="id_Drone" />
-          <ScalarProperty Name="id_Med" ColumnName="id_Med" />
-          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
