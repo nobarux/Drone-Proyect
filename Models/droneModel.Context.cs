@@ -18,7 +18,6 @@ namespace Drone_Proyect.Models
         public drone_proyEntities()
             : base("name=drone_proyEntities")
         {
-            this.Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
